@@ -5,9 +5,19 @@ The architecture presented in this solution is typically applicable to a Line of
 
 ## Architecture
 
-![alt text.](./media/folder_name/architecture-diagram.png)
+![The entirety of this image is in the scope of a subscription and a private DNS Zone, denoted by a subscription icon and a a Private DNS zone icon in the top left corner. Below these icons two blocks side by side represent two virtual networks, with VNet peering between them. The block on the left represents the Hub VNet and the block on the right represents the Spoke VNet. Within the left box, there are three smaller boxes, each indicating a different subnet and its associated network security group. Starting from the top left is a Bastion instance within the Bastion subnet, and the top right being the Jumpbox VM residing in the Jumpbox subnet. On the bottom right is the third and last box in the Hub VNet, containing the CI/CD Agent server residing in the CI/CD subnet. The  box on the right, representing the Spoke VNet, contains only one smaller box - the ASE subnet that has the App Service Environment v3 instance within.  With a smaller box representing the App Service Environment, there is an App Service icon. On the bottom center of the image are shared resources that are also deployed as part of the process starting from left to right - Key Vault, Log Analytics Workspace, and Application Insights.](../Images/LOB-ILB-ASEv3.png)
 
-_Download a [Visio file](https://arch-center.azureedge.net/architecture.vsdx) that contains this architecture diagram. This file must be uploaded to `https://arch-center.azureedge.net/`_
+_Download a [Visio file](./ASEv3.vsdx) that contains this architecture diagram._
+
+### Workflow
+
+There are three flows that pertain to this architecture: Operations (items 1-3), Deployment (item 4) and User (item 5).
+
+1. Operators or Administrators wanting to perform administration tasks on the CI/CD server would need to first connect to the Bastion Host.
+2. Using the Bastion host, the operator or administrator can then RDP into the Jumpbox server.
+3. From the Jumpbox server, the operator or administrator can RDP into the CI/CD server and perform the required tasks, such as agent upgrades, OS upgrades, etc.
+4. Deployment of the solution is performed via the CI/CD Agent server. The agent on this server will interact with either an Azure DevOps pipeline or a GitHuv workflow when a new deployment is executed.  The agent will then deploy the App Service by connecting to the App Service Environment (ASE) over the VNet peering.
+5. Users that want to connect to the deployed App Service will be able to do so over the company's network, using any existing Express Route or VPN if required, and/or over any applicable Azure VNet peering.
 
 ### Components
 
