@@ -1,9 +1,27 @@
-#
-# Variables for Naming and Tagging
-# ---------------------------------------------------------------------------------------------
+variable "resource_type" {
+  type        = string
+  description = "(Optional) - describes the type of azure resource you are requesting a name from (eg. azure container registry: azurerm_container_registry). See the Resource Type section"
+  default     = ""
+}
+
+variable "resource_types" {
+  type        = list(string)
+  description = "(Optional) - a list of additional resource type should you want to use the same settings for a set of resources"
+  default     = []
+}
+
 variable "application_name" {
   description = "(Required) Full Product/Application name which will be used to tag."
   type        = string
+}
+
+variable "environment" {
+  description = "(Required) Numerical representation of the environment"
+  type        = string
+  validation {
+    condition     = contains(["uat", "dev", "prod", "qa"], lower(var.environment))
+    error_message = "Environment must be of values uat, dev, qa or prod."
+  }
 }
 
 variable "location" {
@@ -38,9 +56,8 @@ variable "business_criticality" {
 }
 
 variable "workload_name" {
-  description = "(Optional) Name of the workload the resource supports. Defaults to 'App Svc Landing Zone Accelerator'"
+  description = "(Required) Name of the workload the resource supports."
   type        = string
-  default     = "App Svc Landing Zone Accelerator"
 }
 
 variable "business_unit" {
@@ -61,75 +78,42 @@ variable "ops_team" {
   default     = "Cloud Ops"
 }
 
-# =============================================================================================
-variable "workloadName" {
-  description = "A short name for the workload being deployed"
+# -
+# - CAF Naming Configuration
+# - ---------------------------------------------------------------------------------------------------------------------
+
+variable "separator" {
   type        = string
-  default     = "ase"
+  description = "(Optional) - defaults to none. The separator character to use between prefixes, resource type, name, suffixes, random character"
+  default     = ""
 }
 
-variable "environment" {
-  description = "The environment for which the deployment is being executed"
-  type        = string
-  default     = "dev"
+variable "clean_input" {
+  type        = bool
+  description = "(Optional) - defaults to true. remove any noncompliant character from the name, suffix or prefix."
+  default     = true
 }
 
-variable "hubVNetNameAddressPrefix" {
-  description = "CIDR prefix to use for Hub VNet"
-  type        = string
-  default     = "10.0.0.0/16"
+variable "use_slug" {
+  type        = bool
+  description = "(Optional) - defaults to true. If a slug should be added to the name - If you put false no slug (the few letters that identify the resource type) will be added to the name."
+  default     = true
 }
 
-variable "spokeVNetNameAddressPrefix" {
-  description = "CIDR prefix to use for Spoke VNet"
-  type        = string
-  default     = "10.1.0.0/16"
+variable "passthrough" {
+  type        = bool
+  description = "(Optional) - defaults to false. Enables the passthrough mode - in that case only the clean input option is considered and the prefixes, suffixes, random, and are ignored. The resource prefixe is not added either to the resulting string"
+  default     = false
 }
 
-variable "bastionAddressPrefix" {
-  description = "CIDR prefix to use for Hub VNet"
-  type        = string
-  default     = "10.0.1.0/24"
-}
-
-variable "CICDAgentNameAddressPrefix" {
-  description = "CIDR prefix to use for Spoke VNet"
-  type        = string
-  default     = "10.0.2.0/24"
-}
-
-variable "jumpBoxAddressPrefix" {
-  description = "CIDR prefix to use for Jumpbox VNet"
-  type        = string
-  default     = "10.0.3.0/24"
-}
-
-variable "aseAddressPrefix" {
-  description = "CIDR prefix to use for ASE"
-  type        = string
-  default     = "10.1.1.0/24"
-}
-
-variable "numberOfWorkers" {
-  description = "numberOfWorkers for ASE"
+variable "random_length" {
   type        = number
-  default     = 3
+  default     = 0
+  description = "(Optional) - defaults to 0 length of the randomly generated string to append to the name."
 }
 
-variable "workerPool" {
-  description = "workerPool for ASE"
-  type        = number
-  default     = 1
-}
-
-variable "vmadminUserName" {
-  description = "admin username for the virtual machine (devops agent, jumpbox)"
-  type        = string
-  default     = "vmadmin"
-}
-
-variable "vmadminPassword" {
-  description = "admin password for the virtual machine (devops agent, jumpbox). If none is provided, will be randomly generated and stored in the Key Vault"
-  type        = string
-  default     = null
+variable "tags" {
+  type        = map(any)
+  default     = {}
+  description = "(Optional) - tags to merge with the generated tags."
 }

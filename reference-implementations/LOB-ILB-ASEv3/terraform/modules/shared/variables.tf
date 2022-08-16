@@ -1,37 +1,42 @@
-variable "resourceSuffix" {
-    type = string
-    description = "resourceSuffix"
+variable "name" {
+  type        = string
+  description = "Base name for the Shared Resources"
 }
 
-variable "resourceGroupName" {
-    type = string
+variable "resource_group_name" {
+  description = "(Required) Name of the resource group for the VNets"
 }
 
 variable "location" {
-    type = string
+  description = "(Required) location - example: South Central US = southcentralus"
+  type        = string
+  validation {
+    condition     = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
+    error_message = "Location must be one of the following: eastus, eastus2, southcentralus, westus."
+  }
 }
 
-variable "adminUsername" {
-    type = string
+variable "admin_username" {
+  type = string
 }
 
-variable "adminPassword" {
-    type = string
-    default = null
+variable "admin_password" {
+  type    = string
+  default = null
 }
 
 variable "devOpsVMSubnetId" {
-    type = string
+  type = string
 }
 
 variable "jumpboxVMSubnetId" {
-    type = string
+  type = string
 }
 
 variable "bastionSubnetId" {
   type = string
 }
 
-variable "tenantId"{
-    type = string
+variable "tenantId" {
+  type = string
 }

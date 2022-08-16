@@ -3,7 +3,7 @@
 resource "azurerm_network_interface" "nic" {
   name                = "${var.vmname}-nic"
   location            = var.location
-  resource_group_name = var.resourceGroupName
+  resource_group_name = var.resource_group_name
 
   ip_configuration {
     name                          = "internal"
@@ -15,11 +15,11 @@ resource "azurerm_network_interface" "nic" {
 #create the vm
 resource "azurerm_windows_virtual_machine" "vm" {
   name                = var.vmname
-  resource_group_name = var.resourceGroupName
+  resource_group_name = var.resource_group_name
   location            = var.location
   size                = "Standard_F2"
-  admin_username      = var.adminUserName
-  admin_password      = var.adminPassword
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
@@ -35,8 +35,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
     sku       = "2016-Datacenter"
     version   = "latest"
   }
-  provision_vm_agent          = true
-  allow_extension_operations  = true
+  provision_vm_agent         = true
+  allow_extension_operations = true
 }
 
 resource "azurerm_virtual_machine_extension" "installagent" {
