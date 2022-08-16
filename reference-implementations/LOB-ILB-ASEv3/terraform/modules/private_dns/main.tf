@@ -14,10 +14,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "this" {
 resource "azurerm_private_dns_a_record" "this" {
   for_each = var.private_dns_a_records
 
-  name                = each.key
-  records             = each.value.records
-  ttl                 = lookup(each.value, "ttl", 3600)
-  
+  name    = each.key
+  records = each.value.records
+  ttl     = lookup(each.value, "ttl", 3600)
+
   zone_name           = azurerm_private_dns_zone.this.name
   resource_group_name = var.resource_group_name
 }

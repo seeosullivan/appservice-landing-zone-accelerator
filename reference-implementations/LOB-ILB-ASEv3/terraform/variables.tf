@@ -23,16 +23,16 @@ variable "data_classification" {
   description = "(Required) Sensitivity of data hosted by this resource."
   type        = string
   validation {
-    condition = contains(["non-business", "public", "general", "confidential", "highly confidential"], lower(var.data_classification))
+    condition     = contains(["non-business", "public", "general", "confidential", "highly confidential"], lower(var.data_classification))
     error_message = "Data Classification must be one of the following: non-business, public, general, confidential, highly confidential."
   }
 }
 
 variable "business_criticality" {
   description = "(Required) Business impact of the resource or supported workload."
-  type = string
+  type        = string
   validation {
-    condition = contains(["high", "medium", "low", "business unit-critical", "mission-critical"], lower(var.business_criticality))
+    condition     = contains(["high", "medium", "low", "business unit-critical", "mission-critical"], lower(var.business_criticality))
     error_message = "Business Criticality must be one of the following: high, medium, low, business unit-critical, mission-critical."
   }
 }
@@ -52,7 +52,7 @@ variable "business_unit" {
 variable "ops_commitment" {
   description = "(Optional) Level of operations support provided for this workload or resource. Defaults to 'Baseline Only'"
   type        = string
-  default = "Baseline only"
+  default     = "Baseline only"
 }
 
 variable "ops_team" {

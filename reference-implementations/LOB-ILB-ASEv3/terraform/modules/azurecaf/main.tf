@@ -18,12 +18,12 @@ locals {
   additional_tags = merge(
     var.tags,
     {
-      WorkloadName = var.workload_name
+      WorkloadName       = var.workload_name
       DataClassification = var.data_classification
-      Criticality = var.business_criticality
-      BusinessUnit = var.business_unit
-      OpsCommitment = var.ops_commitment
-      OpsTeam = var.ops_team
+      Criticality        = var.business_criticality
+      BusinessUnit       = var.business_unit
+      OpsCommitment      = var.ops_commitment
+      OpsTeam            = var.ops_team
     }
   )
 

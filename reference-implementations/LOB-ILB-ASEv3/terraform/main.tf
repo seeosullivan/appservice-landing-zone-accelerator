@@ -31,15 +31,15 @@ module "azurecaf" {
   ]
   location = var.location
 
-  application_name       = var.application_name
-  environment            = var.environment
+  application_name = var.application_name
+  environment      = var.environment
 
-  data_classification = var.data_classification
+  data_classification  = var.data_classification
   business_criticality = var.business_criticality
-  workload_name = var.workload_name
-  business_unit = var.business_unit
-  ops_commitment = var.ops_commitment
-  ops_team = var.ops_team
+  workload_name        = var.workload_name
+  business_unit        = var.business_unit
+  ops_commitment       = var.ops_commitment
+  ops_team             = var.ops_team
 }
 
 

@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "aserg" {
 
 resource "azurerm_app_service_environment_v3" "ase" {
   name                         = module.azurecaf.results["azurerm_app_service_environment"]
-  resource_group_name = azurerm_resource_group.aserg.name
+  resource_group_name          = azurerm_resource_group.aserg.name
   subnet_id                    = module.hubspoke_vnets.spokeSubnets["hostingEnvironment"]
   internal_load_balancing_mode = "Web, Publishing"
   zone_redundant               = true
@@ -16,23 +16,23 @@ resource "azurerm_app_service_environment_v3" "ase" {
 module "privateDns" {
   source = "./modules/private_dns"
 
-  private_fqdn = "${azurerm_app_service_environment_v3.ase.name}.appserviceenvironment.net"
-  target_vnet_id = module.hubspoke_vnets.spokeVnetId
+  private_fqdn        = "${azurerm_app_service_environment_v3.ase.name}.appserviceenvironment.net"
+  target_vnet_id      = module.hubspoke_vnets.spokeVnetId
   resource_group_name = azurerm_resource_group.aserg.name
 
   private_dns_a_records = {
     "*" = {
-        records = azurerm_app_service_environment_v3.ase.internal_inbound_ip_addresses
-        ttl = 3600
-      },
-      "*.scm" = {
-        records = azurerm_app_service_environment_v3.ase.internal_inbound_ip_addresses
-        ttl = 3600
-      },
-      "@" = {
-        records = azurerm_app_service_environment_v3.ase.internal_inbound_ip_addresses
-        ttl = 3600
-      }
+      records = azurerm_app_service_environment_v3.ase.internal_inbound_ip_addresses
+      ttl     = 3600
+    },
+    "*.scm" = {
+      records = azurerm_app_service_environment_v3.ase.internal_inbound_ip_addresses
+      ttl     = 3600
+    },
+    "@" = {
+      records = azurerm_app_service_environment_v3.ase.internal_inbound_ip_addresses
+      ttl     = 3600
+    }
   }
 }
 

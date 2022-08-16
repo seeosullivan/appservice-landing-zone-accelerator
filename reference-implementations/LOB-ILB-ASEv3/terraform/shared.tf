@@ -10,12 +10,12 @@ data "azurerm_client_config" "current" {
 
 # Create the DevOps and Jumpbox VMs
 module "shared-vms" {
-  source            = "./modules/shared"
-  name    = module.azurecaf.results["general"]
+  source              = "./modules/shared"
+  name                = module.azurecaf.results["general"]
   resource_group_name = azurerm_resource_group.sharedrg.name
-  location          = azurerm_resource_group.sharedrg.location
-  admin_username     = var.vmadminUserName
-  admin_password     = var.vmadminPassword
+  location            = azurerm_resource_group.sharedrg.location
+  admin_username      = var.vmadminUserName
+  admin_password      = var.vmadminPassword
 
   # TODO: Cleanup the subnets getting passed into the module
   # Breakup the module such that the key vaults are a single module, and the devops/jumpbox/bastion vms are created separately

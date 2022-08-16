@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "vnetHub" {
   tags = merge(
     var.tags,
     {
-      "SpokeVNetName": "spoke-${var.name}"
+      "SpokeVNetName" : "spoke-${var.name}"
     }
   )
 }
@@ -22,18 +22,18 @@ resource "azurerm_virtual_network" "vnetSpoke" {
   tags = merge(
     var.tags,
     {
-      "HubVNetName": azurerm_virtual_network.vnetHub.name
+      "HubVNetName" : azurerm_virtual_network.vnetHub.name
     }
   )
 }
 
 resource "azurerm_subnet" "subnetsHub" {
-  for_each = var.hub_subnets
-  resource_group_name = var.resource_group_name
+  for_each             = var.hub_subnets
+  resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnetHub.name
 
-  name                 = each.key
-  address_prefixes     = each.value.address_prefixes
+  name             = each.key
+  address_prefixes = each.value.address_prefixes
 
 
   dynamic "delegation" {
@@ -53,9 +53,9 @@ resource "azurerm_subnet" "subnetsHub" {
 resource "azurerm_subnet" "subnetsSpoke" {
   for_each = var.spoke_subnets
 
-  name                 = each.key
+  name                = each.key
   resource_group_name = var.resource_group_name
-  address_prefixes     = each.value.address_prefixes
+  address_prefixes    = each.value.address_prefixes
 
   virtual_network_name = azurerm_virtual_network.vnetSpoke.name
 
@@ -66,8 +66,8 @@ resource "azurerm_subnet" "subnetsSpoke" {
       name = each.value.delegation.name
 
       service_delegation {
-        name    =  each.value.delegation.name
-        actions =  each.value.delegation.actions
+        name    = each.value.delegation.name
+        actions = each.value.delegation.actions
       }
     }
   }
@@ -76,7 +76,7 @@ resource "azurerm_subnet" "subnetsSpoke" {
 // Peering
 resource "azurerm_virtual_network_peering" "peerhubtospoke" {
   name                         = "peerhubtospoke-${var.name}"
-  resource_group_name = var.resource_group_name
+  resource_group_name          = var.resource_group_name
   virtual_network_name         = azurerm_virtual_network.vnetHub.name
   remote_virtual_network_id    = azurerm_virtual_network.vnetSpoke.id
   allow_virtual_network_access = true

@@ -23,6 +23,6 @@ variable "location" {
 
 variable "tags" {
   description = "(Optional) Map of tags to assign to the Bastion Host."
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }

@@ -32,12 +32,12 @@
 # # -----------------------------------------------------------------------
 output "hubSpokeVnets" {
   description = "Values from the HubSpoke VNets module."
-  value = module.hubspoke_vnets
+  value       = module.hubspoke_vnets
 }
 
 output "bastion" {
   description = "Values from the Bastion module."
-  value = module.bastion
+  value       = module.bastion
 }
 
 # output "hubVNetName" {

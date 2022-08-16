@@ -59,26 +59,26 @@ resource "random_password" "password" {
 
 # Devops agent
 module "devopsvm" {
-  source             = "../winvm"
-  vmname             = "devopsvm"
-  location           = var.location
-  resource_group_name  = var.resource_group_name
+  source              = "../winvm"
+  vmname              = "devopsvm"
+  location            = var.location
+  resource_group_name = var.resource_group_name
   admin_username      = var.admin_username
   admin_password      = var.admin_password == null ? random_password.password.0.result : var.admin_password
-  cidr               = var.devOpsVMSubnetId
-  installDevOpsAgent = true
+  cidr                = var.devOpsVMSubnetId
+  installDevOpsAgent  = true
 }
 
 # jumpbox
 module "jumpboxvm" {
-  source             = "../winvm"
-  vmname             = "jumpboxvm"
-  location           = var.location
-  resource_group_name  = var.resource_group_name
+  source              = "../winvm"
+  vmname              = "jumpboxvm"
+  location            = var.location
+  resource_group_name = var.resource_group_name
   admin_username      = var.admin_username
   admin_password      = var.admin_password == null ? random_password.password.1.result : var.admin_password
-  cidr               = var.jumpboxVMSubnetId
-  installDevOpsAgent = false
+  cidr                = var.jumpboxVMSubnetId
+  installDevOpsAgent  = false
 }
 
 # If no VM password is provided, store the generated passwords into the Key Vault as secrets

@@ -23,12 +23,12 @@ resource "azurerm_resource_group" "networkrg" {
 
 module "hubspoke_vnets" {
   source = "./modules/hubspoke_vnets"
-  name = module.azurecaf.results["azurerm_virtual_network"]
+  name   = module.azurecaf.results["azurerm_virtual_network"]
 
   location            = azurerm_resource_group.networkrg.location
   resource_group_name = azurerm_resource_group.networkrg.name
 
-  hub_address_space = [var.hubVNetNameAddressPrefix]
+  hub_address_space   = [var.hubVNetNameAddressPrefix]
   spoke_address_space = [var.aseAddressPrefix]
 
   hub_subnets = {
@@ -59,11 +59,11 @@ module "hubspoke_vnets" {
 module "bastion" {
   source = "./modules/bastion"
 
-  name = "bastion-${module.azurecaf.results["azurerm_bastion_host"]}"
+  name                = "bastion-${module.azurecaf.results["azurerm_bastion_host"]}"
   location            = azurerm_resource_group.networkrg.location
   resource_group_name = azurerm_resource_group.networkrg.name
-  subnet_id = module.hubspoke_vnets.hubSubnets["AzureBastionSubnet"]
-  
+  subnet_id           = module.hubspoke_vnets.hubSubnets["AzureBastionSubnet"]
+
   tags = module.azurecaf.tags
 }
 

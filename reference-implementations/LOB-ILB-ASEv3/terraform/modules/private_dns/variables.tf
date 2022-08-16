@@ -1,11 +1,11 @@
 variable "private_fqdn" {
   description = "The name of the Private DNS Zone. Must be a valid domain name."
-  type = string
+  type        = string
 }
 
 variable "resource_group_name" {
   description = "Name of the resource group for the ASE"
-  type = string
+  type        = string
 }
 
 variable "target_vnet_id" {
@@ -14,7 +14,7 @@ variable "target_vnet_id" {
 
 variable "private_dns_a_records" {
   description = "Map of A records to create"
-  type = map
-  default = {}
-    
+  type        = map(any)
+  default     = {}
+
 }

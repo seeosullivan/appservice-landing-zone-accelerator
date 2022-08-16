@@ -29,7 +29,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_private_dns_a_records"></a> [private\_dns\_a\_records](#input\_private\_dns\_a\_records) | Map of A records to create | `map` | `{}` | no |
+| <a name="input_private_dns_a_records"></a> [private\_dns\_a\_records](#input\_private\_dns\_a\_records) | Map of A records to create | `map(any)` | `{}` | no |
 | <a name="input_private_fqdn"></a> [private\_fqdn](#input\_private\_fqdn) | The name of the Private DNS Zone. Must be a valid domain name. | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group for the ASE | `string` | n/a | yes |
 | <a name="input_target_vnet_id"></a> [target\_vnet\_id](#input\_target\_vnet\_id) | ID of the virtual network to link to the Private DNS Zone | `any` | n/a | yes |

@@ -27,17 +27,17 @@ variable "location" {
 variable "hub_subnets" {
   description = "(Optional) Map of subnets to create under the HUB VNet."
   type        = map(any)
-  default = {}
+  default     = {}
 }
 
 variable "spoke_subnets" {
   description = "(Optional) Map of subnets to create under the SPOKE VNet."
   type        = map(any)
-  default = {}
+  default     = {}
 }
 
 variable "tags" {
   type        = map(string)
   description = "(Optional) Map of tags to assign to the VNet."
-  default = {}
+  default     = {}
 }
