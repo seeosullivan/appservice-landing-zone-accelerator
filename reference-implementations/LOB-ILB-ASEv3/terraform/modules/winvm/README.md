@@ -27,12 +27,12 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_adminPassword"></a> [adminPassword](#input\_adminPassword) | n/a | `string` | n/a | yes |
-| <a name="input_adminUserName"></a> [adminUserName](#input\_adminUserName) | n/a | `string` | n/a | yes |
+| <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | n/a | `string` | n/a | yes |
+| <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | n/a | `string` | n/a | yes |
 | <a name="input_cidr"></a> [cidr](#input\_cidr) | n/a | `string` | n/a | yes |
 | <a name="input_installDevOpsAgent"></a> [installDevOpsAgent](#input\_installDevOpsAgent) | n/a | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
-| <a name="input_resourceGroupName"></a> [resourceGroupName](#input\_resourceGroupName) | n/a | `string` | n/a | yes |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_vmname"></a> [vmname](#input\_vmname) | name of the virtual machine | `any` | n/a | yes |
 
 ## Outputs

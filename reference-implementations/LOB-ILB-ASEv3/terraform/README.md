@@ -137,12 +137,16 @@ As you configured the backend remote state with your live Azure infrastructure r
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.1.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.18.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_azurecaf"></a> [azurecaf](#module\_azurecaf) | ./modules/azurecaf | n/a |
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | ./modules/bastion | n/a |
+| <a name="module_hubspoke_vnets"></a> [hubspoke\_vnets](#module\_hubspoke\_vnets) | ./modules/hubspoke_vnets | n/a |
+| <a name="module_privateDns"></a> [privateDns](#module\_privateDns) | ./modules/private_dns | n/a |
 | <a name="module_shared-vms"></a> [shared-vms](#module\_shared-vms) | ./modules/shared | n/a |
 
 ## Resources
@@ -150,22 +154,9 @@ As you configured the backend remote state with your live Azure infrastructure r
 | Name | Type |
 |------|------|
 | [azurerm_app_service_environment_v3.ase](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_environment_v3) | resource |
-| [azurerm_bastion_host.bastionHost](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/bastion_host) | resource |
-| [azurerm_private_dns_a_record.privateDnsZoneName_Amp](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_a_record) | resource |
-| [azurerm_private_dns_a_record.privateDnsZoneName_all](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_a_record) | resource |
-| [azurerm_private_dns_a_record.privateDnsZoneName_scm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_a_record) | resource |
-| [azurerm_private_dns_zone.privateDnsZone](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone) | resource |
-| [azurerm_private_dns_zone_virtual_network_link.privateDnsZoneName_vnetLink](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [azurerm_public_ip.bastionHostPippublicIp](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
 | [azurerm_resource_group.aserg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_group.networkrg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_group.sharedrg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_service_plan.appServicePlan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan) | resource |
-| [azurerm_subnet.vnetSpokeSubnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
-| [azurerm_virtual_network.vnetHub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
-| [azurerm_virtual_network.vnetSpoke](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
-| [azurerm_virtual_network_peering.peerhubtospoke](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
-| [azurerm_virtual_network_peering.peerspoketohub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 
 ## Inputs
@@ -173,31 +164,30 @@ As you configured the backend remote state with your live Azure infrastructure r
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_CICDAgentNameAddressPrefix"></a> [CICDAgentNameAddressPrefix](#input\_CICDAgentNameAddressPrefix) | CIDR prefix to use for Spoke VNet | `string` | `"10.0.2.0/24"` | no |
+| <a name="input_application_name"></a> [application\_name](#input\_application\_name) | (Required) Full Product/Application name which will be used to tag. | `string` | n/a | yes |
 | <a name="input_aseAddressPrefix"></a> [aseAddressPrefix](#input\_aseAddressPrefix) | CIDR prefix to use for ASE | `string` | `"10.1.1.0/24"` | no |
 | <a name="input_bastionAddressPrefix"></a> [bastionAddressPrefix](#input\_bastionAddressPrefix) | CIDR prefix to use for Hub VNet | `string` | `"10.0.1.0/24"` | no |
+| <a name="input_business_criticality"></a> [business\_criticality](#input\_business\_criticality) | (Required) Business impact of the resource or supported workload. | `string` | n/a | yes |
+| <a name="input_business_unit"></a> [business\_unit](#input\_business\_unit) | (Optional) Top-level division of your company that owns the subscription or workload that the resource belongs to. In smaller organizations, this tag might represent a single corporate or shared top-level organizational element. Defaults to Cloud Ops | `string` | `"Cloud Ops"` | no |
+| <a name="input_data_classification"></a> [data\_classification](#input\_data\_classification) | (Required) Sensitivity of data hosted by this resource. | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment for which the deployment is being executed | `string` | `"dev"` | no |
 | <a name="input_hubVNetNameAddressPrefix"></a> [hubVNetNameAddressPrefix](#input\_hubVNetNameAddressPrefix) | CIDR prefix to use for Hub VNet | `string` | `"10.0.0.0/16"` | no |
 | <a name="input_jumpBoxAddressPrefix"></a> [jumpBoxAddressPrefix](#input\_jumpBoxAddressPrefix) | CIDR prefix to use for Jumpbox VNet | `string` | `"10.0.3.0/24"` | no |
-| <a name="input_location"></a> [location](#input\_location) | The Azure location where all resources should be created | `string` | `"westus2"` | no |
+| <a name="input_location"></a> [location](#input\_location) | (Required) location - example: South Central US = southcentralus | `string` | n/a | yes |
 | <a name="input_numberOfWorkers"></a> [numberOfWorkers](#input\_numberOfWorkers) | numberOfWorkers for ASE | `number` | `3` | no |
+| <a name="input_ops_commitment"></a> [ops\_commitment](#input\_ops\_commitment) | (Optional) Level of operations support provided for this workload or resource. Defaults to 'Baseline Only' | `string` | `"Baseline only"` | no |
+| <a name="input_ops_team"></a> [ops\_team](#input\_ops\_team) | (Optional) Team accountable for day-to-day operations. Defaults to 'Cloud Ops' | `string` | `"Cloud Ops"` | no |
 | <a name="input_spokeVNetNameAddressPrefix"></a> [spokeVNetNameAddressPrefix](#input\_spokeVNetNameAddressPrefix) | CIDR prefix to use for Spoke VNet | `string` | `"10.1.0.0/16"` | no |
 | <a name="input_vmadminPassword"></a> [vmadminPassword](#input\_vmadminPassword) | admin password for the virtual machine (devops agent, jumpbox). If none is provided, will be randomly generated and stored in the Key Vault | `string` | `null` | no |
 | <a name="input_vmadminUserName"></a> [vmadminUserName](#input\_vmadminUserName) | admin username for the virtual machine (devops agent, jumpbox) | `string` | `"vmadmin"` | no |
 | <a name="input_workerPool"></a> [workerPool](#input\_workerPool) | workerPool for ASE | `number` | `1` | no |
 | <a name="input_workloadName"></a> [workloadName](#input\_workloadName) | A short name for the workload being deployed | `string` | `"ase"` | no |
+| <a name="input_workload_name"></a> [workload\_name](#input\_workload\_name) | (Optional) Name of the workload the resource supports. Defaults to 'App Svc Landing Zone Accelerator' | `string` | `"App Svc Landing Zone Accelerator"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_appServicePlanId"></a> [appServicePlanId](#output\_appServicePlanId) | ID of the App Service Plan. |
-| <a name="output_appServicePlanName"></a> [appServicePlanName](#output\_appServicePlanName) | Name of the App Service Plan. |
-| <a name="output_aseId"></a> [aseId](#output\_aseId) | ID of the App Service Environment. |
-| <a name="output_aseName"></a> [aseName](#output\_aseName) | Name of the App Service Environment. |
-| <a name="output_hubSubnets"></a> [hubSubnets](#output\_hubSubnets) | Hub virtual network subnet name-to-id mapping. |
-| <a name="output_hubVNetId"></a> [hubVNetId](#output\_hubVNetId) | ID of the provisioned Hub virtual network. |
-| <a name="output_hubVNetName"></a> [hubVNetName](#output\_hubVNetName) | Name of the provisioned Hub virtual network. |
-| <a name="output_shared-vms"></a> [shared-vms](#output\_shared-vms) | Private IP Addresses and IDs of the provisioned shared virtual machines (DevOps and Jumpbox VMs). |
-| <a name="output_spokeVNetId"></a> [spokeVNetId](#output\_spokeVNetId) | ID of the provisioned Spoke virtual network. |
-| <a name="output_spokeVNetName"></a> [spokeVNetName](#output\_spokeVNetName) | Name of the provisioned Spoke virtual network. |
+| <a name="output_bastion"></a> [bastion](#output\_bastion) | Values from the Bastion module. |
+| <a name="output_hubSpokeVnets"></a> [hubSpokeVnets](#output\_hubSpokeVnets) | Values from the HubSpoke VNets module. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

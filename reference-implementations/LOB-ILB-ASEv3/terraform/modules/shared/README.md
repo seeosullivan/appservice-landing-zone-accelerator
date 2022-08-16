@@ -35,14 +35,14 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_adminPassword"></a> [adminPassword](#input\_adminPassword) | n/a | `string` | `null` | no |
-| <a name="input_adminUsername"></a> [adminUsername](#input\_adminUsername) | n/a | `string` | n/a | yes |
+| <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | n/a | `string` | `null` | no |
+| <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | n/a | `string` | n/a | yes |
 | <a name="input_bastionSubnetId"></a> [bastionSubnetId](#input\_bastionSubnetId) | n/a | `string` | n/a | yes |
 | <a name="input_devOpsVMSubnetId"></a> [devOpsVMSubnetId](#input\_devOpsVMSubnetId) | n/a | `string` | n/a | yes |
 | <a name="input_jumpboxVMSubnetId"></a> [jumpboxVMSubnetId](#input\_jumpboxVMSubnetId) | n/a | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
-| <a name="input_resourceGroupName"></a> [resourceGroupName](#input\_resourceGroupName) | n/a | `string` | n/a | yes |
-| <a name="input_resourceSuffix"></a> [resourceSuffix](#input\_resourceSuffix) | resourceSuffix | `string` | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | (Required) location - example: South Central US = southcentralus | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Base name for the Shared Resources | `string` | n/a | yes |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | (Required) Name of the resource group for the VNets | `any` | n/a | yes |
 | <a name="input_tenantId"></a> [tenantId](#input\_tenantId) | n/a | `string` | n/a | yes |
 
 ## Outputs
